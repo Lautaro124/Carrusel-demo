@@ -1,17 +1,22 @@
-import { StyleSheet} from 'react-native';
+import { StyleSheet, Dimensions} from 'react-native';
+const { width: windowWidth, height: windowHeight } = Dimensions.get("window");
 
 const styles = StyleSheet.create({
+    flat: {
+        flex:1
+    },
     contenCard: {
+        width: windowWidth,
+        height: windowHeight,
+        paddingTop: 20,
         alignItems: 'center',
         justifyContent: 'center',
-        marginTop: 12,
-        width: '100%',
-        height: 600,
         backgroundColor: 'red'
     },
     title: {
-        fontSize:20,
+        fontSize:40,
         textAlign: 'center',
+        marginBottom: 10,
     },
     img: {
         width: '80%',
@@ -22,7 +27,6 @@ const styles = StyleSheet.create({
         fontSize: 20,
     },
     home: {
-        margin: 10,
         width: '100%',
         height: '100%',
         backgroundColor: 'blue',
