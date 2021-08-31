@@ -1,17 +1,16 @@
 import React from 'react'
 import {useState, useRef, useCallback, useEffect } from 'react';
-import { FlatList, TouchableOpacity, View, Text, Dimensions} from 'react-native';
+import { FlatList, TouchableOpacity, View, Text } from 'react-native';
 import data from '../../data/data'
 import Card from '../Card/Card'
 import styles from '../../style/Styles'
 
-const { width: windowWidth, height: windowHeight } = Dimensions.get("window");
 
 export default function Home (){
     const [index, setIndex] = useState(0)
-    const indexRef = useRef(index)
+    const [dataShow, setDataShow]= useState(index)
 
-    indexRef.current = index
+    const indexRef = useRef(index)
 
     const onCalculateCurrenPage = (event) => {
         const { contentOffset } = event.nativeEvent;
@@ -20,9 +19,18 @@ export default function Home (){
 
         setIndex(pageNum);
       };
-      useEffect(() => {
-        console.warn(index)
-    }, [index])
+    
+     function prevCard() {
+        setIndex(index === 0 ? 0 : index - 1);    
+         indexRef.current.scrollToIndex({index: index});    
+        setDataShow(index === 1 ? [data[0]] : [data[index-1]]);
+    }
+      
+     function nextCard() {
+        setIndex(index === data.length - 1 ? 0 : index + 1);    
+        indexRef.current.scrollToIndex({index: index});    
+        setDataShow(index === data.length - 2 ? [data[index]] : [data[index+1]]);
+    }
 
     return(
         <View style={styles.home }>
@@ -31,12 +39,21 @@ export default function Home (){
                 style={styles.flat}
                 pagingEnabled={true}
                 horizontal={true}
+                ref={indexRef}
+                extraData= {dataShow}
                 onScroll={onCalculateCurrenPage}
                 showsHorizontalScrollIndicator={false}
                 renderItem={({ item }) => {
                     return <Card data={item} />;
                 }}
-            /> 
+            />
+            <TouchableOpacity onPress={prevCard}>
+                <Text>Last</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity onPress={nextCard}>
+                <Text>Next</Text>
+            </TouchableOpacity>
         </View>
     )
 }
