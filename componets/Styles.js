@@ -12,6 +12,8 @@ const styles = StyleSheet.create({
         textAlign: 'center',
     },
     img: {
+        width: '100%',
+        height: '90%',
         resizeMode: 'cover'
     },
     text: {

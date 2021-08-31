@@ -6,7 +6,7 @@ export default function Home (props){
     return(
         <View style= {styles.contenCard}>
             <Text style={styles.title} >{props.book}</Text>
-            <Image resizeMode='cover' style={styles.img} source={{uri: props.images}}/>
+            <Image style={styles.img} source={{uri: props.images}}/>
         </View>
     )
 }
