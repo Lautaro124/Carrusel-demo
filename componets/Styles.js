@@ -2,25 +2,30 @@ import { StyleSheet} from 'react-native';
 
 const styles = StyleSheet.create({
     contenCard: {
-        margin: 15,
-        marginTop: '80%',
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginTop: 12,
         width: '100%',
-        height: '100%',
+        height: 600,
+        backgroundColor: 'red'
     },
     title: {
-        fontSize:40,
+        fontSize:20,
         textAlign: 'center',
     },
     img: {
-        width: '100%',
-        height: '90%',
-        resizeMode: 'cover'
+        width: '80%',
+        height: 500,
+        paddingBottom: 200,
     },
     text: {
         fontSize: 20,
     },
     home: {
-        backgroundColor: 'red',
+        margin: 10,
+        width: '100%',
+        height: '100%',
+        backgroundColor: 'blue',
     },
     button: {
         width: 150,
@@ -30,8 +35,8 @@ const styles = StyleSheet.create({
     bts:{
         alignItems: 'center',
         width: "90%",
-        height: 190,
-
+        height: 80,
+        backgroundColor: 'green'
     },
 })
 

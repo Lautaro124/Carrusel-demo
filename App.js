@@ -4,6 +4,6 @@ import Home from './componets/Home/Home'
 
 export default function App() {
   return (
-    <Home style={styles.home}/>
+    <Home/>
   );
 }

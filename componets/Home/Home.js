@@ -39,7 +39,7 @@ export default function Home (){
     }
 
     return(
-        <View>
+        <View style={ styles.home }>
             <FlatList 
                 contentContainerStyle={{
                     alignItems: 'center', 
