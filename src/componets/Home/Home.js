@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {Fragment} from 'react'
 import {useState, useRef, useCallback, useEffect } from 'react';
 import { FlatList, TouchableOpacity, View, Text } from 'react-native';
 import data from '../../data/data'
@@ -8,52 +8,63 @@ import styles from '../../style/Styles'
 
 export default function Home (){
     const [index, setIndex] = useState(0)
-    const [dataShow, setDataShow]= useState(index)
 
-    const indexRef = useRef(index)
+    const flatListRef = useRef(null)
 
-    const onCalculateCurrenPage = (event) => {
+    function onCalculateCurrenPage (event)  {
         const { contentOffset } = event.nativeEvent;
         const viewSize = event.nativeEvent.layoutMeasurement;
         const pageNum = Math.floor(contentOffset.x / viewSize.width);
-
         setIndex(pageNum);
-      };
-    
-     function prevCard() {
-        setIndex(index === 0 ? 0 : index - 1);    
-         indexRef.current.scrollToIndex({index: index});    
-        setDataShow(index === 1 ? [data[0]] : [data[index-1]]);
-    }
-      
-     function nextCard() {
-        setIndex(index === data.length - 1 ? 0 : index + 1);    
-        indexRef.current.scrollToIndex({index: index});    
-        setDataShow(index === data.length - 2 ? [data[index]] : [data[index+1]]);
     }
 
+    function changePage(index) {
+        flatListRef?.current?.scrollToIndex({index});    
+        setIndex(index);  
+    }
+
+    function prevCard() {
+        const i = index === 0 ? 0 : index - 1;
+        changePage(i);
+    }
+    
+    
+     function nextCard() {
+        const i = index + 1
+        changePage(i);  
+    }
+    function Title ({onPress, title}) {
+        return (
+            <TouchableOpacity style={styles.btsleft} onPress={onPress}>
+                <Text style={styles.textHomeButton}> {title}</Text>
+            </TouchableOpacity> 
+        );
+    }
+    
     return(
         <View style={styles.home }>
            <FlatList
                 data={data}
-                style={styles.flat}
+                style={styles.flatlsitHome}
                 pagingEnabled={true}
                 horizontal={true}
-                ref={indexRef}
-                extraData= {dataShow}
-                onScroll={onCalculateCurrenPage}
+                ref={flatListRef} 
+                onMomentumScrollEnd={onCalculateCurrenPage}
                 showsHorizontalScrollIndicator={false}
                 renderItem={({ item }) => {
                     return <Card data={item} />;
                 }}
             />
-            <TouchableOpacity onPress={prevCard}>
-                <Text>Last</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity onPress={nextCard}>
-                <Text>Next</Text>
-            </TouchableOpacity>
+            <View style={styles.flexHomeButtion}>   
+                {
+                    index > 0 &&
+                        <Title onPress={prevCard} title={'<-- Last'} /> 
+                }
+                {
+                    index !== data.length -1 &&
+                        <Title onPress={nextCard} title={'next -->'} />
+                }              
+            </View>        
         </View>
     )
 }
